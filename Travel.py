@@ -10,7 +10,7 @@ data['Score'] = place_scores
 
 def rank_weekend_places(city_name, data):
 
-    city_data = data[(data['City'] == city_name) & (~data['Weekly Off'].str.contains('Saturday|Sunday'))]
+    city_data = data[(data['City'] == city_name) & (~data['Weekly Off'].str.contains('Saturday|Sunday', na=False))]
 
     ranked_places = city_data.sort_values(by='Score', ascending=False)
     return ranked_places[['Name' , 'Type' , 'Score']]
