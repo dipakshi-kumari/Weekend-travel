@@ -2,15 +2,13 @@ import pandas as pd
 
 data=pd.read_csv('Top Indian Places to Visit.csv')
 
-def rank_weekend_places(city_name, data):
+features = ['Google review rating' , 'time needed to visit in hrs' , 'Number of google review in lakhs']
+weights = {'Google review rating' : 40, 'time needed to visit in hrs':-20, 'Number of google review in lakhs':20}
+place_scores = data[features].mul(pd.Series(weights), axis=1).sum(axis=1)
     
-    features = ['Google review rating' , 'time needed to visit in hrs' , 'Number of google review in lakhs']
-    
-    weights = {'Google review rating' : 40, 'time needed to visit in hrs':-20, 'Number of google review in lakhs':20}
-    place_scores = data[features].mul(pd.Series(weights), axis=1).sum(axis=1)
-    
-    data['Score'] = place_scores
+data['Score'] = place_scores
 
+def rank_weekend_places(city_name, data):
 
     city_data = data[data['City'] == city_name]
 
